@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@font-face{
+    font-family: 'Roboto Slab';
+    src:url('assets/fonts/Roboto_Slab/RobotoSlab-Light.ttf') format('ttf'),url('assets/fonts/Roboto_Slab/RobotoSlab-Thin.ttf')format('ttf'),url('assets/fonts/Roboto_Slab/RobotoSlab-Thin.ttf')format('ttf'),url('assets/fonts/Roboto_Slab/RobotoSlab-Regular.ttf')format('ttf'),url('assets/fonts/Roboto_Slab/RobotoSlab-Bold.ttf')format('ttf')
+    
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0;  font-family: 'Roboto Slab'; }
+
+
+
+.form-control{
+    border: none;
+    .search{
+        width: 80%;        
+    }
+}
+
+.note-card{
+    min-height: 7rem;
+    margin: 1rem;
+
+
+    .card-text{
+        letter-spacing: .01428571em;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    }
+
+    .card-footer{
+        border:none;
+        background: none;
+    }
+}
+
+.modal-content{
+    background: none;
+    border: none;
+}
+
+.card-body:hover{
+    box-shadow: 1px -1px 17px 6px beige;
+    cursor: pointer;
+}

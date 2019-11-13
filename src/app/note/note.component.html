@@ -1,0 +1,19 @@
+<!-- create a note -->
+<div class="container my-5">
+    <div class="row mb-2 justify-content-center" *ngIf="!showCreatePanel">
+        <div class="col-md-6">
+            <div class="card shadow">
+            <input id="takeNote" type="text" class="form-control" (click)="toggle()" placeholder="Take a note...">
+            
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row justify-content-center" *ngIf="showCreatePanel">
+        <div class="col-md-6">
+            <app-add-update-note [isEditNoteActive]="isEditNoteActive" (toggle)="toggle($event)"></app-add-update-note>
+        </div>
+    </div>
+</div>

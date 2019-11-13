@@ -1,0 +1,28 @@
+.note-columns{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+#searchBox{
+    width: 80%;
+}
+
+textarea{
+    width: 100%;
+    border: none;
+}
+
+.note-list{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    align-content: flex-start;
+}
+
+.note-list-item{
+    align-items: flex-start;
+    flex:0 1 33.3%;
+}

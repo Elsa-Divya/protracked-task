@@ -1,0 +1,20 @@
+.sidenav{
+    height: 100vh;
+    color:white;
+
+    .nav-item{
+        font-size: 18px;
+        text-transform: capitalize;
+        line-height: 40px;
+
+
+        .fa{
+            margin: 0 1rem
+        }
+
+        .subtitle{
+            color: azure;
+            font-size: small;
+        }
+    }
+}

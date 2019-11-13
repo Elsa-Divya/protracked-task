@@ -1,0 +1,29 @@
+textarea{
+    width: 100%;
+    border: none;
+    background: none;
+}
+.color-swatch-list{
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+}
+.color-swatch-list-item{
+    border: 1px solid;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.createLabel{
+    margin: 0rem 0.5rem;
+    text-align: center;
+    font-size: small;
+}
+
+.small-btn{
+    text-align: center;
+    font-size: small;
+    cursor: pointer;
+    padding: 0.5rem 0rem;
+    background: #e4e1e157
+}
