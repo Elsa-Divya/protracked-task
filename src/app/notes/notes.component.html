@@ -1,17 +1,18 @@
-<div class="notes-landingpage">
+<div>
     <!-- Note search -->
     <nav class="navbar navbar-light bg-light">
         <div class="form-group" id="searchBox">
-            <input  type="text" class="form-control" placeholder="Search your note..." [(ngModel)]="searchNote">
+            <input type="text" class="form-control" placeholder="Search your note..." [(ngModel)]="searchNote">
         </div>
     </nav>
-    
+
+    <!-- Create/Edit Note component -->
     <app-note></app-note>
+    <!-- ./Create/Edit Note component -->
 
-
-    <!-- Available Notes-->
+    <!-- All Notes -->
     <div class="container">
-        <div class="note-list" cdkDropList  (cdkDropListDropped)="drop($event)">
+        <div class="note-list" cdkDropList (cdkDropListDropped)="drop($event)">
             <div class="note-list-item mb-2" *ngFor="let note of notes | search:searchNote">
                 <div *ngIf="!note.isHidden" class="card note-card" [style.background]="note.color" (click)="editNote(note)" cdkDrag>
                     <div class="card-body">
@@ -24,4 +25,6 @@
             </div>
         </div>
     </div>
+    <!-- ./All Notes -->
+
 </div>

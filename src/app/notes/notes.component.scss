@@ -11,18 +11,37 @@
 textarea{
     width: 100%;
     border: none;
+
 }
 
-.note-list{
+
+
+.note-list {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    flex-flow: row wrap;
-    align-content: flex-start;
-}
+    flex-flow: column wrap;
+    align-content: space-between;
+    /* Your container needs a fixed height, and it 
+     * needs to be taller than your tallest column. */
+    height: 100vw;
+  }
+  
+  .note-list-item {
+    width: 33.33%;
+    flex-flow: 1 1 33.33% !important;
 
-.note-list-item{
-    align-items: flex-start;
-    flex:0 1 33.3%;
-}
+
+  }
+    
+  /* Re-order items into 3 rows */
+  .note-list-item:nth-child(3n+1) { order: 1; }
+  .note-list-item:nth-child(3n+2) { order: 2; }
+  .note-list-item:nth-child(3n)   { order: 3; }
+  
+  /* Force new columns */
+  .note-list::before,
+  .note-list::after {
+    content: "";
+    flex-basis: 100%;
+    width: 0;
+    order: 2;
+  }

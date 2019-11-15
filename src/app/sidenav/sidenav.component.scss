@@ -1,6 +1,8 @@
 .sidenav{
-    height: 100vh;
+    min-height: 100vw;
     color:white;
+    position: fixed;
+    width: 20%;
 
     .nav-item{
         font-size: 18px;

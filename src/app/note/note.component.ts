@@ -16,18 +16,15 @@ export class NoteComponent implements OnInit {
 
   showCreatePanel: boolean = false;
 
-  constructor(private noteService:NoteService) { }
-
- 
+  constructor(private noteService: NoteService) { }
 
   ngOnInit() {
-    this.noteService.isPanelOpen.subscribe(data=>{
+    this.noteService.isPanelOpen.subscribe(data => {
       this.showCreatePanel = data;
     })
   }
 
-
-  toggle(){
+  toggle() {
     this.showCreatePanel = !this.showCreatePanel;
   }
 

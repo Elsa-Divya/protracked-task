@@ -114,7 +114,7 @@ export class NotesComponent implements OnInit {
       console.log('hide')
       note.isHidden = false;
       this.noteService.toogleEdit(false);
-      this.noteService.tooglePanel(false);
+      this.noteService.showPanel(false);
       this.getNotes();
     })
   }

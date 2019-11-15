@@ -16,11 +16,17 @@ body { margin: 0;  font-family: 'Roboto Slab'; }
 
 .note-card{
     min-height: 7rem;
+    max-height: 20rem;
     margin: 1rem;
+    
+    .card-body{
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 
     .card-text{
-        letter-spacing: .01428571em;
+    letter-spacing: .01428571em;
     font-size: .875rem;
     font-weight: 400;
     line-height: 1.25rem;
@@ -37,7 +43,7 @@ body { margin: 0;  font-family: 'Roboto Slab'; }
     border: none;
 }
 
-.card-body:hover{
+.card:hover{
     box-shadow: 1px -1px 17px 6px beige;
     cursor: pointer;
 }

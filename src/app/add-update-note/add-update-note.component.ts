@@ -13,8 +13,8 @@ export class AddUpdateNoteComponent implements OnInit {
 
   title = new FormControl('');
   content = new FormControl('');
-  label = new FormControl('');
-  selectedLabel = new FormControl();
+  labelName = new FormControl('');
+
   showTitleInput: boolean = false;
   showPanel: boolean = true;
   showCreateLabel: boolean = false;
@@ -24,6 +24,7 @@ export class AddUpdateNoteComponent implements OnInit {
 
   note: Note;
 
+  // list of available labels
   labels: any[] = [];
   selected_labels: String[] = [];
   selected_color: string = "white";
@@ -33,35 +34,28 @@ export class AddUpdateNoteComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   clickOutside(e) {
-    if (this.elRef.nativeElement.contains(e.target)) {
-      console.log('inside comp')
-      //this.noteService.tooglePanel(false);
-      //this.noteService.toogleEdit(false);
-    } else if ((e.target.id === "takeNote")) {
-      console.log('take note')
-      this.noteService.tooglePanel(true);
+    console.log(this.elref.nativeElement.contains(e.target))
+    if(this.elref.nativeElement.contains(e.target)){
+      console.log("inside")
+    }else if ((e.target.id === "takeNote")) {
+      this.noteService.showPanel(true);
 
     } else {
-      console.log('outside comp and take note')
+      console.log('outside')
+      this.noteService.showPanel(false);
     }
 
   }
 
-  constructor(private noteService: NoteService, private modalService: BsModalService, private elRef: ElementRef) {
+  constructor(private noteService: NoteService, private modalService: BsModalService,private elref:ElementRef) {
 
   }
-
-  togglePanel() {
-    this.showPanel = !this.showPanel;
-    this.noteService.tooglePanel(this.showPanel);
-  }
-
-
 
   ngOnInit() {
     this.noteService.isEditActive.subscribe(data => {
       this.isEditNoteActive = data;
     })
+
     if (this.isEditNoteActive) {
       this.getNote();
     } else {
@@ -72,7 +66,7 @@ export class AddUpdateNoteComponent implements OnInit {
     
 
   }
-
+  // Create an empty note with default values
   createNote() {
     this.note = <Note>{
       title: this.title.value,
@@ -84,23 +78,54 @@ export class AddUpdateNoteComponent implements OnInit {
     }
   }
 
+  // Get all the available labels
+  getAllLabels() {
+    this.labels = this.noteService.getAllLabels().map((e) => {
+      let label = {
+        value: e,
+        checked: false
+      }
+      return label
+    })
+  }
+
+
+  // Create new label and add to the note
   createLabel() {
     let label: any = {}
     label.checked = true;
-    label.value = this.label.value;
+    label.value = this.labelName.value;
 
     this.note.labels.push(label.value);
-
     this.labels.push(label);
-    this.noteService.addLabel(this.label.value);
-    this.label.reset();
+
+    // Save label to storage
+    this.noteService.addLabel(this.labelName.value);
+
+    // Reset label input 
+    this.labelName.reset();
     this.showCreateLabel = false;
-
-
-
-
-    console.log(this.labels)
   }
+
+  // add selected label from dropdown to the note
+  addLabelToNote(e) {
+
+    if (e.target.checked) {
+      this.note.labels.push(e.target.value);
+    } else {
+      this.note.labels = this.note.labels.filter(label => {
+        return e.target.value != label
+      })
+    }
+    
+  }
+
+
+  togglePanel() {
+    this.showPanel = !this.showPanel;
+    this.noteService.showPanel(this.showPanel);
+  }
+
 
   getNote() {
     let note = this.noteService.getNote();
@@ -122,21 +147,10 @@ export class AddUpdateNoteComponent implements OnInit {
       this.labels.push(label)
     });
 
-    console.log(this.labels)
+
 
 
     //this.selected_labels = note.labels;
-  }
-
-  getAllLabels() {
-    console.log(this.noteService.getAllLabels())
-    this.labels = this.noteService.getAllLabels().map((e) => {
-      let label = {
-        value: e,
-        checked: false
-      }
-      return label
-    })
   }
 
   toogleCreateLabel() {
@@ -151,17 +165,7 @@ export class AddUpdateNoteComponent implements OnInit {
     this.note.color = color;
   }
 
-  addLabelToNote(e) {
 
-    if (e.target.checked) {
-      this.selected_labels.push(e.target.value);
-    } else {
-      this.selected_labels = this.selected_labels.filter(label => {
-        return e.target.value != label
-      })
-    }
-    this.note.labels = this.selected_labels;
-  }
 
   updateNote() {
     this.note = <Note>{
@@ -195,8 +199,6 @@ export class AddUpdateNoteComponent implements OnInit {
   resetNote() {
     this.title.reset();
     this.content.reset();
-    this.selected_labels = [];
-
   }
 
 }

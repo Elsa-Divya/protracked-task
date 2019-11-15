@@ -23,11 +23,6 @@ export class NoteService {
   constructor() { }
 
   getNotes(){
-  //  let notes: Note[] = [
-  //     {title: 'Title', color: 'lightblue', content:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",labels:["a","b"],lastUpdated:"",id:1},
-  //     {title: '',  color: 'lightgreen',content:"",labels:["app","testing"],lastUpdated:"",id:133},
-  //     {title: 'abvdff',  color: 'lightpink',content:"",labels:["testing app"],lastUpdated:"",id:1333}
-  //   ];
     this.notes = JSON.parse(localStorage.getItem("notes")) || [];
 
     return this.notes;
@@ -59,7 +54,7 @@ export class NoteService {
     console.log("update note",this.notes)
   }
 
-  tooglePanel(showPanel){
+  showPanel(showPanel){
     this.toogleNoteCreation.next(showPanel);
   }
 
@@ -72,10 +67,12 @@ export class NoteService {
   }
 
   addLabel(label){
-   
-    this.labels.push(label);
-    console.log(this.labels)
-    localStorage.setItem("labels",JSON.stringify(this.labels));
+    let all_labels = this.getAllLabels();
+
+   // this.labels.push(label);
+   // console.log(this.labels)
+    all_labels.push(label);
+    localStorage.setItem("labels",JSON.stringify(all_labels));
     this.addLabels.next(label);
   }
 
