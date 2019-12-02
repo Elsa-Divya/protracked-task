@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NoteComponent } from './note/note.component';
+import { NotesComponent } from './notes/notes.component';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'keep-notes';
+
+  @ViewChild(NotesComponent,{static:false})
+  notes:NotesComponent
+
+  getNotes(e){
+    console.log('notes',e)
+    this.notes.getNotes()
+  }
 }

@@ -24,6 +24,8 @@ import { AddUpdateNoteComponent } from './add-update-note/add-update-note.compon
 import { FilterPipe } from './filters/filter.pipe';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { LabelFilterPipe } from './filters/label-filter.pipe';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NotesComponent,
     NoteComponent,
     AddUpdateNoteComponent,
-    FilterPipe
+    FilterPipe,
+    LabelFilterPipe
   ],
   imports: [
     BrowserModule,

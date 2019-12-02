@@ -1,6 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 
+@mixin list-layout {
+    .note-list{
+        display: block;
+        margin: auto;
+        width: 60%;
+    }
+}
+
+@mixin grid-layout{
+    .note-list {
+        display: flex;
+        flex-flow: column wrap;
+        align-content: flex-start;
+        height: 100vw;
+        .note-list-item {
+            width: 33.33%;
+            flex-flow: 1 1 33.33% !important;
+        
+        
+          }
+      }
+      
+
+        
+      /* Re-order items into 3 rows */
+      .note-list-item:nth-child(3n+1) { order: 1; }
+      .note-list-item:nth-child(3n+2) { order: 2; }
+      .note-list-item:nth-child(3n)   { order: 3; }
+      
+      /* Force new columns */
+      .note-list::before,
+      .note-list::after {
+        content: "";
+        flex-basis: 100%;
+        width: 0;
+        order: 2;
+      }
+    
+}
+
+@mixin icons($size) {
+        font-size: $size
+}
+
 
 html, body { height: 100%; }
 body { margin: 0;  font-family: 'Roboto Slab'; }
@@ -18,11 +62,11 @@ body { margin: 0;  font-family: 'Roboto Slab'; }
     min-height: 7rem;
     max-height: 20rem;
     margin: 1rem;
-    
-    .card-body{
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+
+    // .card-body{
+    //     overflow: hidden;
+    //     text-overflow: ellipsis;
+    // }
 
 
     .card-text{
@@ -30,6 +74,10 @@ body { margin: 0;  font-family: 'Roboto Slab'; }
     font-size: .875rem;
     font-weight: 400;
     line-height: 1.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
     }
 
     .card-footer{
@@ -46,4 +94,25 @@ body { margin: 0;  font-family: 'Roboto Slab'; }
 .card:hover{
     box-shadow: 1px -1px 17px 6px beige;
     cursor: pointer;
+}
+
+
+
+.grid-layout{
+    @include grid-layout();
+}
+
+.list-layout{
+    @include list-layout()
+}
+
+.fa{
+    @include icons(1.5rem)
+}
+
+.sidenav{
+    .fa{
+        @include icons(1.2rem)
+    }
+    
 }

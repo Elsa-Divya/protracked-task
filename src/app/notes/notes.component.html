@@ -6,13 +6,18 @@
         </div>
     </nav>
 
+    <!-- Toggle list view-->
+    
+    <button type="button" class="btn float-right" (click)="toggleListLayout()"><i class="fa" [ngClass]="{'fa-th':toggleGridLayout,'fa-list':!toggleGridLayout}" aria-hidden="true"></i></button>
+    
+
     <!-- Create/Edit Note component -->
     <app-note></app-note>
     <!-- ./Create/Edit Note component -->
 
     <!-- All Notes -->
-    <div class="container">
-        <div class="note-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="container" [ngClass]="{'list-layout':toggleGridLayout,'grid-layout':!toggleGridLayout}">
+        <div class=" note-list" cdkDropList (cdkDropListDropped)="drop($event)">
             <div class="note-list-item mb-2" *ngFor="let note of notes | search:searchNote">
                 <div *ngIf="!note.isHidden" class="card note-card" [style.background]="note.color" (click)="editNote(note)" cdkDrag>
                     <div class="card-body">

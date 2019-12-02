@@ -1,0 +1,7 @@
+@mixin themable($theme-name,$primary-color,$secondary-color) {
+    .#{$theme-name}{
+            .sidenav{
+                background-color: aqua
+            }
+    }
+}

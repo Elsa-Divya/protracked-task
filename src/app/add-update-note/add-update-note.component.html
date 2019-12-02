@@ -31,11 +31,11 @@
                 <li role="menuitem">
                     <input type="text" placeholder="Enter label name" [formControl]="labelName" (keyup)="toogleCreateLabel()" class="createLabel">
                 </li>
-                <li class="small-btn" role="menuitem" *ngIf="showCreateLabel" (click)="createLabel()">
+                <li class="small-btn" role="menuitem" [hidden]="!showCreateLabel" (click)="createLabel()">
                     <i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Create label</li>
 
 
-                <li role="menuitem" *ngFor="let label of labels">
+                <li role="menuitem" *ngFor="let label of labels | labelFilter:labelName.value">
                     <div class="dropdown-item" *ngIf="!showCreateLabel">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1" [value]="label.value" (change)="addLabelToNote($event)"
                             [checked]="label.checked">

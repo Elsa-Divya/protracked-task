@@ -34,7 +34,7 @@ export class AddUpdateNoteComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   clickOutside(e) {
-    console.log(this.elref.nativeElement.contains(e.target))
+    console.log(this.elref.nativeElement,e.target,this.elref.nativeElement.contains(e.target))
     if(this.elref.nativeElement.contains(e.target)){
       console.log("inside")
     }else if ((e.target.id === "takeNote")) {
@@ -92,12 +92,15 @@ export class AddUpdateNoteComponent implements OnInit {
 
   // Create new label and add to the note
   createLabel() {
+
+    // checking for ex
+
     let label: any = {}
     label.checked = true;
     label.value = this.labelName.value;
 
-    this.note.labels.push(label.value);
-    this.labels.push(label);
+    this.note.labels.unshift(label.value);
+    this.labels.unshift(label);
 
     // Save label to storage
     this.noteService.addLabel(this.labelName.value);
@@ -155,6 +158,12 @@ export class AddUpdateNoteComponent implements OnInit {
 
   toogleCreateLabel() {
     this.showCreateLabel = true;
+    this.noteService.filtered_labels.subscribe(data=>{
+       if(data.length>0){
+         this.showCreateLabel = false
+       }
+    })
+   // this.showCreateLabel = true;
   }
 
   toggleTitle() {

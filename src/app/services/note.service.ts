@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Note } from '../model/note';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,8 @@ export class NoteService {
   public selectedNote:Note;
   public labels:string[] = [];
 
+  private filteredNotes = new Subject<Note[]>();
+
   private toogleNoteCreation = new BehaviorSubject<boolean>(false);
   isPanelOpen = this.toogleNoteCreation.asObservable();
 
@@ -20,12 +22,53 @@ export class NoteService {
   private addLabels = new BehaviorSubject<any>(null);
   getLabels = this.addLabels.asObservable();
 
+  private toogleLabelCreation = new BehaviorSubject<boolean>(false);
+  createLabel = this.toogleLabelCreation.asObservable();
+
+  private s = new BehaviorSubject<any>([]);
+  filtered_labels = this.s.asObservable();
+
+  $notesSubject = new BehaviorSubject<Note[]>([]);
+  
+
+
+
   constructor() { }
 
-  getNotes(){
+  getNotes(label?){
+    let filteredNotes = [];
+
     this.notes = JSON.parse(localStorage.getItem("notes")) || [];
 
-    return this.notes;
+    if(label){
+      filteredNotes = this.notes.filter(e=>{
+          if(e.labels.findIndex(val=>label===val)>-1){
+              return true
+          }
+      })
+    }else{
+      filteredNotes = this.notes;
+    }
+
+    console.log(filteredNotes,label)
+   
+    // let filteredNotes = []
+    // if(label){
+    //   filteredNotes = this.notes.filter(e=>{
+    //   return e.labels  
+    //   }).filter(label=>{
+    //     return label == label
+    //   })
+    // }
+    // this.filteredNotes.next(filteredNotes)
+    this.$notesSubject.next(filteredNotes);
+    return this.$notesSubject.asObservable();
+  }
+
+  getFilteredNotes(label){
+    this.getNotes(label);
+    return this.filteredNotes.asObservable();
+    
   }
 
   setNote(note){
@@ -40,9 +83,7 @@ export class NoteService {
    this.notes.unshift(note);
   }
 
-  updateNote(note){
-
-   
+  updateNote(note){   
     const index = this.notes.findIndex((e)=>{return (note.id===e.id)})
 
     if(index==-1){
@@ -51,8 +92,9 @@ export class NoteService {
       this.notes[index] = note
     }
     localStorage.setItem("notes",JSON.stringify(this.notes));
-    console.log("update note",this.notes)
   }
+
+
 
   showPanel(showPanel){
     this.toogleNoteCreation.next(showPanel);
@@ -66,11 +108,16 @@ export class NoteService {
     return JSON.parse(localStorage.getItem("labels"))|| []
   }
 
+  filterLabel(list){
+    this.s.next(list);
+  }
+
+  enableCreateLabel(enable){
+    this.toogleLabelCreation.next(enable);
+  }
+
   addLabel(label){
     let all_labels = this.getAllLabels();
-
-   // this.labels.push(label);
-   // console.log(this.labels)
     all_labels.push(label);
     localStorage.setItem("labels",JSON.stringify(all_labels));
     this.addLabels.next(label);

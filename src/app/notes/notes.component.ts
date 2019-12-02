@@ -1,9 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Note } from '../model/note';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { NoteService } from '../services/note.service';
-import { NoteComponent } from '../note/note.component';
 import { AddUpdateNoteComponent } from '../add-update-note/add-update-note.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -16,6 +15,7 @@ export class NotesComponent implements OnInit {
 
   showCreatePanel: boolean = false;
   showTitleInput: boolean = false;
+  toggleGridLayout:boolean = false;
 
 
   note: Note;
@@ -38,9 +38,12 @@ export class NotesComponent implements OnInit {
 
   ngOnInit() {
     this.getNotes();
+
   }
 
-
+  toggleListLayout(){
+    this.toggleGridLayout = !this.toggleGridLayout;
+  }
 
 
   toggle(){
@@ -51,8 +54,11 @@ export class NotesComponent implements OnInit {
     this.showTitleInput = !this.showTitleInput;
   }
 
-  getNotes(){   
-    this.notes = this.noteService.getNotes();
+  getNotes(){ 
+    this.noteService.getNotes().subscribe(data=>{
+      this.notes = data ;
+    })  
+    
     console.log(this.notes)
   }
 
